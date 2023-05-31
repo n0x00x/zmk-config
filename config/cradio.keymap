@@ -66,7 +66,7 @@
             &kp EXCL   &kp AT     &kp HASH   &kp DLLR   &kp PRCNT      &kp CARET  &kp AMPS   &kp ASTRK  &kp LPAR    &kp RPAR
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│ ~ `      │          │          │          │          │   │ [ {      │   ] }    │   ; :    │          │          │
-        &ht GRAVE TILDE &ht PLUS EQUAL &ht MINUS UNDER &ht PIPE BSLH  &ht LBRC LBKT  &ht RBRC RBKT &ht COLON SEMI     &none     &none     &none     &none
+        &ht GRAVE TILDE &ht PLUS EQUAL &ht MINUS UNDER &ht PIPE BSLH  &ht LBRC LBKT  &ht RBRC RBKT &ht COLON SEMI &none &none &none &none
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &kp ESC        &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
