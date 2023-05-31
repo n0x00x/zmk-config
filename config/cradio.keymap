@@ -51,7 +51,7 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                            &lt SYM2 TAB   &kp ENTER     &kp SPACE  &lt SYM BSPC
+                                            &lt SYM2 TAB   &kp ENTER  &kp SPACE  &lt SYM BSPC
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -93,14 +93,14 @@
         tri_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│          │          │          │          │          │   │          │          │ VOL MUTE │  VOL UP  │ VOL DOWN │
-            &none     &none       &none      &none      &none          &none     &none    &kp C_MUTE &kp C_VOL_UP &kp C_VOL_DN
+        //│   1      │          │          │          │PROFILE 0 │   │          │          │ VOL MUTE │  VOL UP  │ VOL DOWN │
+            &kp N1     &none       &none      &none    &bt BT_SEL 0     &none     &none    &kp C_MUTE &kp C_VOL_UP &kp C_VOL_DN
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │          │          │   │          │          │          │          │          │
-            &trans     &trans     &trans     &trans    &trans           &trans     &trans     &trans     &none    &none
+        //│          │          │          │          │PROFILE 1 │   │          │          │          │          │          │
+            &trans     &trans     &trans     &trans   &bt BT_SEL 1     &trans     &trans     &trans     &none    &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│ RESET    │BOOTLOADER│          │ CLEAR BT │PROFILE 0 │   │PROFILE 1 │PROFILE 2 │          │BOOTLOADER│ RESET    │
-           &sys_reset &bootloader &trans   &bt BT_CLR &bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &trans  &bootloader &sys_reset
+        //│ RESET    │BOOTLOADER│          │ CLEAR BT │PROFILE 2 │   │          │          │          │BOOTLOADER│ RESET    │
+           &sys_reset &bootloader &trans   &bt BT_CLR &bt BT_SEL 2      &none     &none       &trans  &bootloader &sys_reset
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
                                              &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
