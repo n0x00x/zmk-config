@@ -93,8 +93,8 @@
         tri_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│   1      │          │          │          │PROFILE 0 │   │          │          │ VOL MUTE │  VOL UP  │ VOL DOWN │
-            &kp N1     &none       &none      &none    &bt BT_SEL 0     &none     &none    &kp C_MUTE &kp C_VOL_UP &kp C_VOL_DN
+        //│   DEL    │          │          │          │PROFILE 0 │   │          │          │ VOL MUTE │  VOL UP  │ VOL DOWN │
+            &kp DEL     &none       &none      &none    &bt BT_SEL 0     &none     &none    &kp C_MUTE &kp C_VOL_UP &kp C_VOL_DN
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │PROFILE 1 │   │          │          │          │          │          │
             &trans     &trans     &trans     &trans   &bt BT_SEL 1     &trans     &trans     &trans     &none    &none
