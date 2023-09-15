@@ -76,7 +76,7 @@
             &kp F1      &kp F2     &kp F3     &kp F4    &kp F5          &kp F6     &kp F7     &kp F8     &kp F9     &kp F10
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│  F11     │  F12     │  Mute    │  VOL DN  │ VOL UP   │   │          │  LEFT    │  UP      │ RIGHT    │          │
-           &kp F11    &kp F12   &kp K_MUTE &kp C_VOL_DN &kp C_VOL_UP           &none     &kp LARW   &kp UARW    &kp RARW   &none
+           &kp F11    &kp F12   &kp K_MUTE &kp C_VOL_DN &kp C_VOL_UP   &C_PP     &kp LARW   &kp UARW    &kp RARW   &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │ DOWN     │   DEL    │          │
             &none     &none       &none      &none      &none          &none     &none       &kp DARW    &kp DEL       &none    
