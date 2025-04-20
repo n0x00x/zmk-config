@@ -86,9 +86,3 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {type: held}
-  rgb:
-  - [RGB_TOG, RGB_MOD, RGB_HUI, RGB_SAI, RGB_VAI, RGB_BRI]
-  - [RGB_HUD, RGB_SAD, RGB_VAD, RGB_RMOD, RGB_SPI, RGB_EFF]
-  - [RGB_BRI, RGB_BRD, ▽, ▽, ▽, ▽]
-  - [▽, ▽, ▽, ▽]
-
