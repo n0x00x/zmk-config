@@ -13,7 +13,7 @@
 #define HRMR(k1,k2,k3,k4) &ht RGUI k1  &ht RCTRL k2  &ht RALT k3  &ht RSHFT k4
 
 &led_strip {
-    chain-length = <12>;
+    chain-length = <6>;
 };
 
 / {
