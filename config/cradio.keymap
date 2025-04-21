@@ -8,10 +8,10 @@
 #include <dt-bindings/zmk/ext_power.h>
 
 // ---------- Layer indexes ----------
-#define _ALPHA    0   // QWERTY + home‑row mods
-#define _NUMSYM   1   // Numbers & symbols
-#define _FUNCNAV  2   // Function & navigation
-#define _SYSTEM   3   // System controls
+#define BASE    0   // QWERTY + home‑row mods
+#define NUMSYM   1   // Numbers & symbols
+#define NAV  2   // Function & navigation
+#define SYSTEM   3   // System controls
 
 
 // ---------- Home-row Mods via single hold-tap ----------
@@ -24,21 +24,26 @@
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "tap-preferred";
-            tapping-term-ms = <220>;
-            quick-tap-ms = <150>;
+	    // max ms before a tap becomes a hold
+            tapping-term-ms = <180>;
+	    // if you tap faster than this, always tap
+            quick-tap-ms = <80>;
+	    // must be idle this long before next press
             require-prior-idle-ms = <100>;
+	    // order: <tap>, <hold>
             bindings = <&kp>, <&kp>;
         };
-	autoshift: auto_shift {
-            compatible = "zmk,behavior-auto-shift";
-            #binding-cells = <2>;
+
+	num_word: num_word {
+          compatible = "zmk,behavior-num-word";
+          #binding-cells = <1>;
         };
     };
 
     // ---------- Conditional tri-layer ----------
     conditional_layers {
         compatible = "zmk,conditional-layers";
-        tri_layer {
+        system_layer {
             if-layers = <_FUNCNAV _NUMSYM>;
             then-layer = <_SYSTEM>;
         };
@@ -46,7 +51,7 @@
 
     keymap {
         compatible = "zmk,keymap";
-        alpha_layer {
+        base_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│  Q       │  W       │  E       │  R       │  T       │   │  Y       │  U       │  I       │  O       │  P       │
@@ -58,12 +63,12 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
 	    &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                                         &lt 2 TAB   &kp ENTER     &kp BSPC  &lt 1 SPACE
+                                         &lt NAV TAB   &kp ENTER     &kp BSPC  &lt NUMSYM SPACE
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
 
-        right_layer {
+        numsym_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│ 1        │ 2        │ 3        │ 4        │ 5        │   │ 6        │ 7        │ 8        │ 9        │  0       │
@@ -80,7 +85,7 @@
             >;
         };
 
-        left_layer {
+        nav_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│  F1      │  F2      │  F3      │  F4      │ F5       │   │  F6      │  F7      │  F8      │  F9      │  F10     │
@@ -97,19 +102,19 @@
             >;
         };
 
-        tri_layer {
+        system_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ RESET    │          │          │          │PROFILE 0 │   │ EP OFF   │          │          │          │  RESET   │
-	   &sys_reset  &trans     &trans     &trans    &bt BT_SEL 0  &ext_power EP_OFF &out OUT_TOG &trans     &trans    &sys_reset
+        //│ PROFILE 0│ PROFILE 1│PROFILE 2 │          │		 │   │BOOTLOADER│          │          │          │  RESET   │
+	&bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL2 &trans  	&trans        &bootloader &out OUT_TOG &trans      &trans   &sys_reset
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│BOOTLOADER│          │          │          │PROFILE 1 │   │ EP ON    │          │          │          │BOOTLOADER│
-	   &bootloader  &trans     &trans     &trans    &bt BT_SEL 1  &ext_power EP_ON &out OUT_BLE     &trans     &trans    &bootloader
+        //│          │          │          │          │          │   │          │          │          │          │EP ON     │
+	   &trans      &trans     &trans     &trans    &trans          &trans &out OUT_BLE     &trans     &trans  &ext_power EP_ON
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
-        //│          │          │          │ CLEAR BT │PROFILE 2 │   │          │          │          │          │          │
-	   &trans     &trans     &trans    &bt BT_CLR &bt BT_SEL 2    &trans     &trans   &out OUT_USB  &trans     &trans
+        //│ CLEAR BT │          │          │          │	         │   │          │          │          │          │EP OFF    │
+	   &bt BT_CLR  &trans     &trans    &trans	&trans          &trans     &trans   &out OUT_USB  &trans  &ext_power EP_OFF
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-	                                             &trans     &trans         &trans     &trans
+	                                      &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
