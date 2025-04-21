@@ -44,8 +44,8 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         system_layer {
-            if-layers = <_FUNCNAV _NUMSYM>;
-            then-layer = <_SYSTEM>;
+            if-layers = <NAV NUMSYM>;
+            then-layer = <SYSTEM>;
         };
     };
 
