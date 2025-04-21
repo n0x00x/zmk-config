@@ -48,7 +48,7 @@
             quick-tap-ms          = <80>;
             require-prior-idle-ms = <100>;
             // <tap>=Slash, <hold>=NumWord layer
-            bindings = <&kp FSLH>, <&num_word NUMSYM>;
+            bindings = <&kp FSLH &num_word NUMSYM>;
         };
     };
 
