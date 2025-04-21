@@ -13,14 +13,10 @@
 #define _FUNCNAV  2   // Function & navigation
 #define _SYSTEM   3   // System controls
 
-// ---------- Keycode shortcuts ----------
-//#define K(k)      &kp k   // keypress
-//#define T         &trans  // transparent
-
 // ---------- One-Shot Mods & Layers ----------
-//#define OS_SFT    &os_mod LSHIFT     // one-shot Shift
-//#define OS_CTL    &os_mod LCTRL      // one-shot Ctrl
-//#define OS_NUM    &os_layer _NUMSYM  // one-shot number layer
+#define OS_SFT    &os_mod LSHIFT     // one-shot Shift
+#define OS_CTL    &os_mod LCTRL      // one-shot Ctrl
+#define OS_NUM    &os_layer _NUMSYM  // one-shot number layer
 
 // ---------- Home-row Mods via single hold-tap ----------
 #define HRML(k1,k2,k3,k4) &ht LSHFT k1  &ht LALT k2   &ht LCTRL k3   &ht LGUI k4
@@ -50,7 +46,7 @@
     };
 
     // ---------- Combos (chorded shortcuts) ----------
-    /*combos {
+    combos {
         compatible = "zmk,combos";
         timeout-ms = <50>;
 
@@ -73,7 +69,7 @@
             bindings = <&kp SEMI &kp COLON>;
         };
     };
-*/
+
     // ---------- Conditional tri-layer ----------
     conditional_layers {
         compatible = "zmk,conditional-layers";
@@ -109,10 +105,12 @@
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
         //│ 1        │ 2        │ 3        │ 4        │ 5        │   │ 6        │ 7        │ 8        │ 9        │  0       │
-	&kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
+	AS(N1)    AS(N2)    AS(N3)    AS(N4)    AS(N5)        AS(N6)    AS(N7)    AS(N8)    AS(N9)     AS(N0)
+//	&kp N1     &kp N2     &kp N3     &kp N4     &kp N5         &kp N6     &kp N7     &kp N8     &kp N9     &kp N0
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│ ` ~      │ = +      │ - _     │  \ |      │  ; :     │   │ [ {      │ ] }      │          │          │          │
-	 &kp GRAVE   &kp EQUAL  &kp MINUS  &kp BSLH   &kp SEMI       &kp LBKT   &kp RBKT   &trans     &trans     &trans
+//	 &kp GRAVE   &kp EQUAL  &kp MINUS  &kp BSLH   &kp SEMI       &kp LBKT   &kp RBKT   &trans     &trans     &trans
+	 AS(GRAVE) AS(EQUAL) AS(MINUS) AS(BSLH)   AS(SEMI)     AS(LBKT)  AS(RBKT)   &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │          │
 	            &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
