@@ -1,6 +1,6 @@
 // Copyright (c) 2022 The ZMK Contributors
 // SPDX-License-Identifier: MIT
-#include <behaviors/hold_tap.dtsi>
+
 #include <behaviors/num_word.dtsi>
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
@@ -78,8 +78,8 @@
             &kp GRAVE   &kp EQUAL  &kp MINUS  &kp BSLH   &kp SEMI       &kp LBKT   &kp RBKT   &trans     &trans     &trans
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │          │
-	    &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &num_word
-        //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
+	    &trans     &trans     &trans     &trans     &trans         &trans     &trans     &trans     &trans     &trans
+	//╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
 						&kp RSHFT     &kp ESC        &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
@@ -95,7 +95,7 @@
 	     &kp F11    &kp F12   &kp K_MUTE &kp C_VOL_DN &kp C_VOL_UP   &kp C_PP     &kp LARW   &kp UARW    &kp RARW   &none
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │ DOWN     │   DEL    │          │
-	     &none     &none       &none      &none      &none          &none     &none       &kp DARW    &kp DEL       &none
+	     &none     &none       &none      &none      &none          &none     &none       &kp DARW    &kp DEL  &num_word NUMSYM
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
 	                                             &trans     &trans         &trans     &trans
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
