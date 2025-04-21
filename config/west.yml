@@ -9,5 +9,11 @@ manifest:
       remote: zmkfirmware
       revision: main
       import: app/west.yml
+
+    - name: zmk-auto-layer
+      url: https://github.com/urob/zmk-auto-layer.git
+      revision: main
+      path: modules/zmk-auto-layer
+
   self:
     path: config

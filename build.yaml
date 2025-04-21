@@ -20,8 +20,10 @@
 include:
   - board: nice_nano_v2
     shield: cradio_left
+    cmake-args: -DZMK_EXTRA_MODULES=modules/zmk-auto-layer
   - board: nice_nano_v2
     shield: cradio_right
+    cmake-args: -DZMK_EXTRA_MODULES=modules/zmk-auto-layer
   - board: nice_nano_v2
     shield: settings_reset
 
