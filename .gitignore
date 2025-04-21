@@ -1,1 +1,6 @@
+build
 setup.sh
+zephyr
+.west
+zmk
+modules

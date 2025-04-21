@@ -35,6 +35,10 @@
             bindings = <&kp>, <&kp>;
         };
     };
+    num_word: num_word {
+      compatible = "zmk,behavior-num-word";
+      #binding-cells = <1>;
+    };
 
     // ---------- Conditional tri-layer ----------
     conditional_layers {
