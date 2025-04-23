@@ -26,9 +26,9 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
 	    // max ms before a tap becomes a hold
-            tapping-term-ms = <180>;
+            tapping-term-ms = <270>;
 	    // if you tap faster than this, always tap
-            quick-tap-ms = <80>;
+            quick-tap-ms = <120>;
 	    // must be idle this long before next press
             require-prior-idle-ms = <100>;
 	    // order: <tap>, <hold>
