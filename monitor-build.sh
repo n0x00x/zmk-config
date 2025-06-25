@@ -52,20 +52,22 @@ if ! gh run list --repo $REPO --limit 1 &>/dev/null; then
     exit 1
 fi
 
-# Get the latest run details
-LATEST_RUN=$(gh run list --repo $REPO --limit 1 --json databaseId,status,conclusion,workflowName,createdAt 2>/dev/null)
+# Get ALL recent runs to find the absolute latest one
+ALL_RUNS=$(gh run list --repo $REPO --limit 5 --json databaseId,status,conclusion,workflowName,createdAt,headSha 2>/dev/null)
 
-if [[ -z "$LATEST_RUN" ]]; then
+if [[ -z "$ALL_RUNS" ]]; then
     echo -e "${RED}❌ No builds found in repository${NC}"
     echo -e "${YELLOW}💡 Push some changes to trigger a build first${NC}"
     exit 1
 fi
 
-RUN_ID=$(echo "$LATEST_RUN" | jq -r '.[0].databaseId')
-STATUS=$(echo "$LATEST_RUN" | jq -r '.[0].status')
-CONCLUSION=$(echo "$LATEST_RUN" | jq -r '.[0].conclusion')
-WORKFLOW=$(echo "$LATEST_RUN" | jq -r '.[0].workflowName')
-CREATED=$(echo "$LATEST_RUN" | jq -r '.[0].createdAt')
+# Get the absolute latest run (first in the list, regardless of status)
+RUN_ID=$(echo "$ALL_RUNS" | jq -r '.[0].databaseId')
+STATUS=$(echo "$ALL_RUNS" | jq -r '.[0].status')
+CONCLUSION=$(echo "$ALL_RUNS" | jq -r '.[0].conclusion')
+WORKFLOW=$(echo "$ALL_RUNS" | jq -r '.[0].workflowName')
+CREATED=$(echo "$ALL_RUNS" | jq -r '.[0].createdAt')
+HEAD_SHA=$(echo "$ALL_RUNS" | jq -r '.[0].headSha')
 
 if [[ -z "$RUN_ID" || "$RUN_ID" == "null" ]]; then
     echo -e "${RED}❌ No builds found in repository${NC}"
@@ -73,9 +75,14 @@ if [[ -z "$RUN_ID" || "$RUN_ID" == "null" ]]; then
     exit 1
 fi
 
-echo -e "${BLUE}Latest Build Info:${NC}"
+# Show recent runs for context
+echo -e "${BLUE}Recent Builds:${NC}"
+echo "$ALL_RUNS" | jq -r '.[] | "  \(.databaseId) | \(.status) | \(.createdAt) | \(.workflowName)"' | head -3
+echo ""
+
+echo -e "${BLUE}Monitoring Build:${NC}"
 echo -e "  Run ID: $RUN_ID"
-echo -e "  Workflow: $WORKFLOW"  
+echo -e "  Commit: ${HEAD_SHA:0:7}"
 echo -e "  Status: $STATUS"
 if [[ "$CONCLUSION" != "null" ]]; then
     echo -e "  Conclusion: $CONCLUSION"
@@ -89,22 +96,55 @@ if [[ "$STATUS" == "completed" ]]; then
         echo -e "${GREEN}✅ Build already completed successfully!${NC}"
         echo -e "${GREEN}📥 Downloading firmware artifacts...${NC}"
         
-        # Clean up old firmware files if they exist
+        # Archive previous firmware if it exists
         if [[ -d "firmware" ]]; then
-            echo -e "${YELLOW}🗑️  Cleaning up previous firmware files...${NC}"
-            rm -rf firmware/
+            TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+            echo -e "${YELLOW}📦 Archiving previous firmware to firmware-archive-$TIMESTAMP/...${NC}"
+            mv firmware "firmware-archive-$TIMESTAMP"
         fi
         
         # Download artifacts
         if gh run download $RUN_ID --repo $REPO; then
             echo -e "${GREEN}🎉 Download complete!${NC}"
             
+            # Add timestamp and build info to firmware directory
+            if [[ -d "firmware" ]]; then
+                BUILD_TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+                BUILD_INFO_FILE="firmware/build-info.txt"
+                
+                cat > "$BUILD_INFO_FILE" << EOF
+ZMK Firmware Build Information
+==============================
+Build Date: $BUILD_TIMESTAMP
+Run ID: $RUN_ID
+Commit SHA: $HEAD_SHA
+GitHub Actions: https://github.com/$REPO/actions/runs/$RUN_ID
+Status: $CONCLUSION
+
+Firmware Variants:
+- conservative_left.uf2 & conservative_right.uf2 (Safe enhancements)
+- selective_hrm_left.uf2 & selective_hrm_right.uf2 (Recommended)
+- toggle_layers_left.uf2 & toggle_layers_right.uf2 (Advanced)
+- hybrid_left.uf2 & hybrid_right.uf2 (Experimental)
+- settings_reset.uf2 (Emergency reset)
+
+Flash Instructions:
+1. Put keyboard in bootloader mode
+2. Copy .uf2 file to the mounted drive
+3. Keyboard will restart with new firmware
+EOF
+                
+                echo -e "${BLUE}📋 Created build info file: $BUILD_INFO_FILE${NC}"
+            fi
+            
             # Extract if requested
             if [[ "$EXTRACT_FLAG" == "yes" ]]; then
-                echo -e "${YELLOW}📂 Extracting firmware files...${NC}"
+                echo -e "${YELLOW}📂 Extracting and organizing firmware files...${NC}"
                 if [[ -d "firmware" ]]; then
-                    ls -la firmware/
-                    echo -e "${GREEN}📁 Firmware files ready in ./firmware/ directory${NC}"
+                    echo -e "${BLUE}Available firmware files:${NC}"
+                    ls -la firmware/*.uf2
+                    echo -e "${GREEN}📁 All firmware variants ready in ./firmware/ directory${NC}"
+                    echo -e "${BLUE}📋 Build info: firmware/build-info.txt${NC}"
                 fi
             fi
             
@@ -153,24 +193,56 @@ if [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; then
                 echo -e "${GREEN}✅ Build completed successfully!${NC}"
                 echo -e "${GREEN}📥 Downloading firmware artifacts...${NC}"
                 
-                # Clean up old firmware files if they exist
+                # Archive previous firmware if it exists
                 if [[ -d "firmware" ]]; then
-                    echo -e "${YELLOW}🗑️  Cleaning up previous firmware files...${NC}"
-                    rm -rf firmware/
+                    TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
+                    echo -e "${YELLOW}📦 Archiving previous firmware to firmware-archive-$TIMESTAMP/...${NC}"
+                    mv firmware "firmware-archive-$TIMESTAMP"
                 fi
                 
                 # Download artifacts
                 if gh run download $RUN_ID --repo $REPO; then
                     echo -e "${GREEN}🎉 Download complete!${NC}"
                     
+                    # Add timestamp and build info to firmware directory
+                    if [[ -d "firmware" ]]; then
+                        BUILD_TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
+                        BUILD_INFO_FILE="firmware/build-info.txt"
+                        
+                        cat > "$BUILD_INFO_FILE" << EOF
+ZMK Firmware Build Information
+==============================
+Build Date: $BUILD_TIMESTAMP
+Run ID: $RUN_ID
+Commit SHA: $HEAD_SHA
+GitHub Actions: https://github.com/$REPO/actions/runs/$RUN_ID
+Status: $CURRENT_CONCLUSION
+
+Firmware Variants:
+- conservative_left.uf2 & conservative_right.uf2 (Safe enhancements)
+- selective_hrm_left.uf2 & selective_hrm_right.uf2 (Recommended)
+- toggle_layers_left.uf2 & toggle_layers_right.uf2 (Advanced)
+- hybrid_left.uf2 & hybrid_right.uf2 (Experimental)
+- settings_reset.uf2 (Emergency reset)
+
+Flash Instructions:
+1. Put keyboard in bootloader mode
+2. Copy .uf2 file to the mounted drive
+3. Keyboard will restart with new firmware
+EOF
+                        
+                        echo -e "${BLUE}📋 Created build info file: $BUILD_INFO_FILE${NC}"
+                    fi
+                    
                     # Extract if requested
                     if [[ "$EXTRACT_FLAG" == "yes" ]]; then
                         echo -e "${YELLOW}📂 Extracting and organizing firmware files...${NC}"
                         if [[ -d "firmware" ]]; then
                             echo -e "${BLUE}Available firmware files:${NC}"
-                            ls -la firmware/
+                            ls -la firmware/*.uf2
                             echo ""
                             echo -e "${GREEN}📁 All firmware variants ready in ./firmware/ directory${NC}"
+                            echo -e "${BLUE}📋 Build info: firmware/build-info.txt${NC}"
                             echo -e "${BLUE}💡 Flash the variant you want to test:${NC}"
                             echo -e "   • conservative_left.uf2 & conservative_right.uf2 (safe start)"
                             echo -e "   • selective_hrm_left.uf2 & selective_hrm_right.uf2 (recommended)"

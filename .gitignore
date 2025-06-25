@@ -20,6 +20,10 @@ CLAUDE.md
 # Backup keymaps (auto-generated)
 config/*backup*.keymap
 
+# Firmware files and archives
+firmware/
+firmware-archive-*/
+
 # Switching script logs
 switch-keymap.log
 features
