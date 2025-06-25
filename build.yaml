@@ -18,10 +18,47 @@
 #
 ---
 include:
-  - board: nice_nano_v2
-    shield: cradio_left
-  - board: nice_nano_v2
-    shield: cradio_right
+  # Settings reset (always available)
   - board: nice_nano_v2
     shield: settings_reset
+    artifact-name: settings_reset
 
+  # Conservative Enhancement - minimal risk improvements
+  - board: nice_nano_v2
+    shield: cradio_left
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-conservative.keymap"
+    artifact-name: conservative_left
+  - board: nice_nano_v2
+    shield: cradio_right
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-conservative.keymap"
+    artifact-name: conservative_right
+  
+  # Selective HRM - RECOMMENDED starting point
+  - board: nice_nano_v2
+    shield: cradio_left
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-selective-hrm.keymap"
+    artifact-name: selective_hrm_left
+  - board: nice_nano_v2
+    shield: cradio_right
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-selective-hrm.keymap"
+    artifact-name: selective_hrm_right
+
+  # Toggle Layers - Ben Vallack style for maximum efficiency
+  - board: nice_nano_v2
+    shield: cradio_left
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-toggle-layers.keymap"
+    artifact-name: toggle_layers_left
+  - board: nice_nano_v2
+    shield: cradio_right
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-toggle-layers.keymap"
+    artifact-name: toggle_layers_right
+
+  # Hybrid Progressive - experimental features
+  - board: nice_nano_v2
+    shield: cradio_left
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-hybrid.keymap"
+    artifact-name: hybrid_left
+  - board: nice_nano_v2
+    shield: cradio_right
+    cmake-args: -DZMK_CONFIG="${GITHUB_WORKSPACE}/config/cradio-hybrid.keymap"
+    artifact-name: hybrid_right

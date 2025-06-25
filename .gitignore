@@ -1,6 +1,25 @@
+.DS_Store
 build
 setup.sh
 zephyr
 .west
 zmk
 modules
+
+# Reference guides and documentation (keep local)
+guides/
+KEYMAP_VARIANTS.md
+README_KEYMAPS.md
+
+# Claude-related files
+CLAUDE.md
+.claude/
+*.claude
+*claude*
+
+# Backup keymaps (auto-generated)
+config/*backup*.keymap
+
+# Switching script logs
+switch-keymap.log
+features
