@@ -77,6 +77,9 @@ echo -e "${BLUE}Latest Build Info:${NC}"
 echo -e "  Run ID: $RUN_ID"
 echo -e "  Workflow: $WORKFLOW"  
 echo -e "  Status: $STATUS"
+if [[ "$CONCLUSION" != "null" ]]; then
+    echo -e "  Conclusion: $CONCLUSION"
+fi
 echo -e "  Created: $CREATED"
 echo ""
 
@@ -85,6 +88,12 @@ if [[ "$STATUS" == "completed" ]]; then
     if [[ "$CONCLUSION" == "success" ]]; then
         echo -e "${GREEN}✅ Build already completed successfully!${NC}"
         echo -e "${GREEN}📥 Downloading firmware artifacts...${NC}"
+        
+        # Clean up old firmware files if they exist
+        if [[ -d "firmware" ]]; then
+            echo -e "${YELLOW}🗑️  Cleaning up previous firmware files...${NC}"
+            rm -rf firmware/
+        fi
         
         # Download artifacts
         if gh run download $RUN_ID --repo $REPO; then
@@ -143,6 +152,12 @@ if [[ "$STATUS" == "in_progress" || "$STATUS" == "queued" ]]; then
                 echo ""
                 echo -e "${GREEN}✅ Build completed successfully!${NC}"
                 echo -e "${GREEN}📥 Downloading firmware artifacts...${NC}"
+                
+                # Clean up old firmware files if they exist
+                if [[ -d "firmware" ]]; then
+                    echo -e "${YELLOW}🗑️  Cleaning up previous firmware files...${NC}"
+                    rm -rf firmware/
+                fi
                 
                 # Download artifacts
                 if gh run download $RUN_ID --repo $REPO; then
