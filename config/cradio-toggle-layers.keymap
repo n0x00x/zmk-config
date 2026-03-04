@@ -40,7 +40,8 @@
             bindings = <&kp>, <&kp>;
         };
 
-        sk_lctrl: sticky_ctrl {
+        // Sticky modifiers - tap for next key, hold for continuous
+        sk_lshft: sticky_shift {
             compatible = "zmk,behavior-sticky-key";
             #binding-cells = <1>;
             bindings = <&kp>;
@@ -48,14 +49,12 @@
             quick-release;
         };
 
-        // Guarded sticky shift - prevents accidental activation during fast typing
-        shift_guard: shift_guard {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";
-            tapping-term-ms = <150>;
-            require-prior-idle-ms = <175>;
-            bindings = <&kp>, <&sk>;
+        sk_lctrl: sticky_ctrl {
+            compatible = "zmk,behavior-sticky-key";
+            #binding-cells = <1>;
+            bindings = <&kp>;
+            release-after-ms = <1000>;
+            quick-release;
         };
 
         // Progressive layer access - Ben Vallack style
@@ -71,7 +70,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&kp SPACE>, <&to BASE>;  // Tap for space, double tap returns to base
+            bindings = <&to BASE>, <&kp SPACE>;  // Tap for space, double tap ensures return
         };
 
         // Left thumb with MEH functionality (for app switching)
@@ -123,17 +122,18 @@
         // Access to NAV layer from SYMBOLS
         combo_nav_access {
             timeout-ms = <40>;
-            key-positions = <14 19>; // G + SQT positions
+            key-positions = <14 19>; // Pinky positions
             bindings = <&to NAV>;
             layers = <SYMBOLS>;
         };
+    };
 
-        // System layer access - Q + P + right thumb from ANY layer
-        combo_system {
-            timeout-ms = <50>;
-            key-positions = <0 9 33>;
-            bindings = <&to SYSTEM>;
-            layers = <BASE SYMBOLS NUMBERS NAV SYSTEM>;
+    // ---------- Conditional layers for system access ----------
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        system_layer {
+            if-layers = <NUMBERS NAV>;
+            then-layer = <SYSTEM>;
         };
     };
 
@@ -152,7 +152,7 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                              &shift_guard LSHFT LSHFT  &meh_space LS(LC(LA(LGUI))) 0   &kp BSPC  &td_layer_right
+                              &sk_lshft LSHFT  &meh_space LS(LC(LA(LGUI))) DUMMY   &kp BSPC  &td_layer_right
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
