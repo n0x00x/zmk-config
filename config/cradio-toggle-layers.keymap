@@ -40,15 +40,6 @@
             bindings = <&kp>, <&kp>;
         };
 
-        // Sticky modifiers - tap for next key, hold for continuous
-        sk_lshft: sticky_shift {
-            compatible = "zmk,behavior-sticky-key";
-            #binding-cells = <1>;
-            bindings = <&kp>;
-            release-after-ms = <1000>;
-            quick-release;
-        };
-
         sk_lctrl: sticky_ctrl {
             compatible = "zmk,behavior-sticky-key";
             #binding-cells = <1>;
@@ -63,7 +54,7 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <150>;
-            require-prior-idle-ms = <100>;
+            require-prior-idle-ms = <175>;
             bindings = <&kp>, <&sk>;
         };
 
@@ -80,7 +71,7 @@
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
             tapping-term-ms = <200>;
-            bindings = <&to BASE>, <&kp SPACE>;  // Tap for space, double tap ensures return
+            bindings = <&kp SPACE>, <&to BASE>;  // Tap for space, double tap returns to base
         };
 
         // Left thumb with MEH functionality (for app switching)
@@ -132,18 +123,17 @@
         // Access to NAV layer from SYMBOLS
         combo_nav_access {
             timeout-ms = <40>;
-            key-positions = <14 19>; // Pinky positions
+            key-positions = <14 19>; // G + SQT positions
             bindings = <&to NAV>;
             layers = <SYMBOLS>;
         };
-    };
 
-    // ---------- Conditional layers for system access ----------
-    conditional_layers {
-        compatible = "zmk,conditional-layers";
-        system_layer {
-            if-layers = <NUMBERS NAV>;
-            then-layer = <SYSTEM>;
+        // System layer access - Q + P + right thumb from ANY layer
+        combo_system {
+            timeout-ms = <50>;
+            key-positions = <0 9 33>;
+            bindings = <&to SYSTEM>;
+            layers = <BASE SYMBOLS NUMBERS NAV SYSTEM>;
         };
     };
 
