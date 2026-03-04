@@ -152,7 +152,7 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                              &sk_lshft LSHFT  &meh_space LS(LC(LA(LGUI))) DUMMY   &kp BSPC  &td_layer_right
+                              &sk_lshft LSHFT  &meh_space LS(LC(LA(LGUI))) 0   &kp BSPC  &td_layer_right
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
