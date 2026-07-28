@@ -1,6 +1,6 @@
 # ZMK build matrix for GitHub Actions
 # Active keymap is determined by the cradio.keymap symlink
-# (currently points to cradio-toggle-layers.keymap)
+# (currently points to cradio-original.keymap)
 ---
 include:
   - board: nice_nano//zmk
