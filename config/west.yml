@@ -5,14 +5,18 @@ manifest:
     # Additional modules containing boards/shields/custom code can be listed here as well
     # See https://docs.zephyrproject.org/3.2.0/develop/west/manifest.html#projects
   projects:
+    # Pinned to a commit, not a branch. A floating revision rebuilds against a
+    # different ZMK and Zephyr on every push, so firmware behavior changes with
+    # no config change and an intermittent BLE fault cannot be bisected.
+    # To move forward, bump the sha deliberately and record the result.
     - name: zmk
       remote: zmkfirmware
-      revision: main
+      revision: faaf39d9f59cd2a27eca3739cdd9eb197654299b # main @ 2026-07-28
       import: app/west.yml
 
     - name: zmk-auto-layer
       url: https://github.com/urob/zmk-auto-layer.git
-      revision: main
+      revision: 62c201934711369d50a28df12e1d055d05cb6460 # main @ 2026-05-21
       path: modules/zmk-auto-layer
 
   self:

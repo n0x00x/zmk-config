@@ -152,7 +152,7 @@
         //│  Z       │  X       │  C       │  V       │  B       │   │  N       │  M       │ , <      │ . >      │ / ?      │
             &kp Z      &kp X      &kp C      &kp V      &kp B          &kp N      &kp M      &kp COMMA  &kp DOT    &kp FSLH
         //╰──────────┴──────────┴──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┴──────────┴──────────╯
-                              &sk_lshft LSHFT  &meh_space LS(LC(LA(LGUI))) DUMMY   &kp BSPC  &td_layer_right
+                              &sk_lshft LSHFT  &meh_space LS(LC(LA(LGUI))) 0   &kp BSPC  &td_layer_right
         //                                 ╰──────────┴──────────╯   ╰──────────┴──────────╯
             >;
         };
@@ -211,8 +211,8 @@
         system_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ PROFILE 0│ PROFILE 1│PROFILE 2 │          │		 │   │BOOTLOADER│          │          │          │  RESET   │
-        &bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &trans  	&trans        &bootloader &out OUT_TOG &trans      &trans   &sys_reset
+        //│ PROFILE 0│ PROFILE 1│PROFILE 2 │PROFILE 3 │PROFILE 4 │   │BOOTLOADER│ OUT TOG  │          │          │  RESET   │
+        &bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3  &bt BT_SEL 4        &bootloader &out OUT_TOG &trans      &trans   &sys_reset
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │EP ON     │
            &trans      &trans     &trans     &trans    &trans          &trans &out OUT_BLE     &trans     &trans  &ext_power EP_ON
