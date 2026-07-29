@@ -7,9 +7,16 @@ include:
     shield: settings_reset
     artifact-name: settings_reset
 
+  # Debug build, TEMPORARY. The left half is the central and is the one that
+  # hangs, so only it gets logging. A peripheral cannot take this: ZMK_USB
+  # depends on ZMK_SPLIT_ROLE_CENTRAL and the build fails on the unmet
+  # dependency. The snippet supplies CONFIG_ZMK_USB_LOGGING together with the
+  # overlay that creates the CDC ACM node, which the Kconfig symbol alone
+  # cannot do. Remove this line once the fault is captured.
   - board: nice_nano//zmk
     shield: cradio_left
     artifact-name: cradio_left
+    snippet: zmk-usb-logging
 
   - board: nice_nano//zmk
     shield: cradio_right
