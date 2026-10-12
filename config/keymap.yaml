@@ -52,36 +52,36 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   tri:
-  - - '&sys_reset'
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: BT, h: '0'}
-    - EP OFF
+  - - {t: BT, h: '0'}
+    - {t: BT, h: '1'}
+    - {t: BT, h: '2'}
+    - {t: BT, h: '3'}
+    - {t: BT, h: '4'}
+    - '&bootloader'
     - OUT TOG
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - '&sys_reset'
-  - - '&bootloader'
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - {t: BT, h: '1'}
-    - EP ON
-    - OUT BLE
-    - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
-    - '&bootloader'
   - - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
-    - BT CLR
-    - {t: BT, h: '2'}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - OUT BLE
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - EP ON
+  - - BT CLR
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
+    - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
     - OUT USB
     - {t: ▽, type: trans}
-    - {t: ▽, type: trans}
+    - EP OFF
   - - {type: held}
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
