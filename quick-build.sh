@@ -32,7 +32,7 @@ while [[ $# -gt 0 ]]; do
             echo ""
             echo "Examples:"
             echo "  $0                                    # Use default commit message"
-            echo "  $0 \"Test selective HRM layout\"       # Custom commit message"
+            echo "  $0 \"Add media keys\"                  # Custom commit message"
             echo "  $0 --extract --notify                # Auto-extract and notify"
             echo "  $0 \"Fix toggle layers\" --extract     # Custom message + extract"
             exit 0
@@ -75,7 +75,7 @@ git status --porcelain
 echo ""
 
 # Show current keymap
-CURRENT_KEYMAP=$(./switch-keymap.sh status 2>/dev/null | cut -d' ' -f3)
+CURRENT_KEYMAP=$(readlink config/cradio.keymap 2>/dev/null)
 if [[ -n "$CURRENT_KEYMAP" ]]; then
     echo -e "${BLUE}🎹 Current active keymap: ${GREEN}$CURRENT_KEYMAP${NC}"
     echo ""

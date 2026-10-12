@@ -121,11 +121,8 @@ Commit SHA: $HEAD_SHA
 GitHub Actions: https://github.com/$REPO/actions/runs/$RUN_ID
 Status: $CONCLUSION
 
-Firmware Variants:
-- conservative_left.uf2 & conservative_right.uf2 (Safe enhancements)
-- selective_hrm_left.uf2 & selective_hrm_right.uf2 (Recommended)
-- toggle_layers_left.uf2 & toggle_layers_right.uf2 (Advanced)
-- hybrid_left.uf2 & hybrid_right.uf2 (Experimental)
+Firmware:
+- cradio_left.uf2 (left half) & cradio_right.uf2 (right half)
 - settings_reset.uf2 (Emergency reset)
 
 Flash Instructions:
@@ -218,11 +215,8 @@ Commit SHA: $HEAD_SHA
 GitHub Actions: https://github.com/$REPO/actions/runs/$RUN_ID
 Status: $CURRENT_CONCLUSION
 
-Firmware Variants:
-- conservative_left.uf2 & conservative_right.uf2 (Safe enhancements)
-- selective_hrm_left.uf2 & selective_hrm_right.uf2 (Recommended)
-- toggle_layers_left.uf2 & toggle_layers_right.uf2 (Advanced)
-- hybrid_left.uf2 & hybrid_right.uf2 (Experimental)
+Firmware:
+- cradio_left.uf2 (left half) & cradio_right.uf2 (right half)
 - settings_reset.uf2 (Emergency reset)
 
 Flash Instructions:
@@ -241,13 +235,9 @@ EOF
                             echo -e "${BLUE}Available firmware files:${NC}"
                             ls -la firmware/*.uf2
                             echo ""
-                            echo -e "${GREEN}📁 All firmware variants ready in ./firmware/ directory${NC}"
+                            echo -e "${GREEN}📁 Firmware ready in ./firmware/ directory${NC}"
                             echo -e "${BLUE}📋 Build info: firmware/build-info.txt${NC}"
-                            echo -e "${BLUE}💡 Flash the variant you want to test:${NC}"
-                            echo -e "   • conservative_left.uf2 & conservative_right.uf2 (safe start)"
-                            echo -e "   • selective_hrm_left.uf2 & selective_hrm_right.uf2 (recommended)"
-                            echo -e "   • toggle_layers_left.uf2 & toggle_layers_right.uf2 (advanced)"
-                            echo -e "   • hybrid_left.uf2 & hybrid_right.uf2 (experimental)"
+                            echo -e "${BLUE}💡 Flash cradio_left.uf2 to the left half and cradio_right.uf2 to the right half${NC}"
                         fi
                     fi
                     
