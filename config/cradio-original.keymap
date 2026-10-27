@@ -36,6 +36,22 @@
         };
     };
 
+    // ---------- Profile keys that also pick the output ----------
+    macros {
+        // macOS: cable when plugged in, profile 0 Bluetooth when not
+        bt_mac: bt_mac {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&out OUT_USB &bt BT_SEL 0>;
+        };
+        // Windows: always Bluetooth profile 2
+        bt_win: bt_win {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&out OUT_BLE &bt BT_SEL 2>;
+        };
+    };
+
     // ---------- Conditional tri-layer ----------
     conditional_layers {
         compatible = "zmk,conditional-layers";
@@ -101,8 +117,8 @@
         system_layer {
             bindings = <
         //╭──────────┬──────────┬──────────┬──────────┬──────────╮   ╭──────────┬──────────┬──────────┬──────────┬──────────╮
-        //│ PROFILE 0│ PROFILE 1│PROFILE 2 │PROFILE 3 │PROFILE 4 │   │BOOTLOADER│ OUT TOG  │          │          │  RESET   │
-	&bt BT_SEL 0  &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3  &bt BT_SEL 4        &bootloader &out OUT_TOG &trans      &trans   &sys_reset
+        //│ MAC USB/0│ PROFILE 1│ WIN BT 2 │PROFILE 3 │PROFILE 4 │   │BOOTLOADER│ OUT TOG  │          │          │  RESET   │
+	&bt_mac       &bt BT_SEL 1 &bt_win      &bt BT_SEL 3  &bt BT_SEL 4       &bootloader &out OUT_TOG &trans      &trans   &sys_reset
         //├──────────┼──────────┼──────────┼──────────┼──────────┤   ├──────────┼──────────┼──────────┼──────────┼──────────┤
         //│          │          │          │          │          │   │          │          │          │          │EP ON     │
 	   &trans      &trans     &trans     &trans    &trans          &trans &out OUT_BLE     &trans     &trans  &ext_power EP_ON

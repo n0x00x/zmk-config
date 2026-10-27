@@ -52,9 +52,9 @@ layers:
     - {t: ▽, type: trans}
     - {t: ▽, type: trans}
   tri:
-  - - {t: BT, h: '0'}
+  - - {t: MAC, h: 'USB/0'}
     - {t: BT, h: '1'}
-    - {t: BT, h: '2'}
+    - {t: WIN, h: 'BT 2'}
     - {t: BT, h: '3'}
     - {t: BT, h: '4'}
     - '&bootloader'
